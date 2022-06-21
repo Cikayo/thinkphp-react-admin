@@ -1,0 +1,33 @@
+$headerHeight: 46px;
+$logoHeight: 42px;
+
+.site-page-layout {
+  height: 100%;
+  .site-logo {
+    height: $logoHeight;
+    background: url("../assets/imgs/logo.png") no-repeat center / 85%;
+  }
+  .site-page-sider {
+    overflow-y: overlay;
+  }
+  .site-layout-header {
+    height: $headerHeight;
+    line-height: $headerHeight;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0 20px;
+  }
+  .site-layout__content {
+    
+    overflow-y: overlay;
+  }
+  .site-content__box {
+    margin: 12px;
+    padding: 16px;
+    background: #fff;
+  }
+}
+
+

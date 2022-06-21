@@ -1,0 +1,43 @@
+#app {
+    height: 100%;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    background-color: #eff1f5;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #b0b2ba;
+    border: 2px solid #eff1f5
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #88898b;
+}
+
+// 公共
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+.mb-2 {
+    margin-bottom: 1rem;
+}
+// 页面公共方法区域
+.site-page-search-form {
+    margin-bottom: 16px;
+    display: none;
+    &.show {
+        display: block;
+    }
+}
+.site-page-functions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+}
