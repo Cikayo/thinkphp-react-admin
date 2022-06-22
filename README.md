@@ -20,17 +20,9 @@ php think run
 
 ```
 npm run install
-```
-
-或者
-
-```
+npm run start
+// or
 yarn
-```
-
-### 项目启动
-
-```
 yarn start
 ```
 
