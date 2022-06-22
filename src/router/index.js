@@ -22,7 +22,7 @@ const menus = {
     }
   ],
   others: [
-
+    { key: '/work/:id', hidden: true, title: '任务编辑', element: 'Work' },
   ]
 }
 

@@ -1,42 +1,17 @@
-import React, { useEffect } from 'react';
-import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+import React from 'react';
+import { Outlet } from "react-router-dom";
 import PageLayout from './layouts';
-import user from "@/store/user";
-import Loading from "@/components/Loading"
+import AuthPage from '@/components/AuthPage';
 
-const App = observer(() => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const { pathname } = location;
-
-  useEffect(() => {
-    if (!user.token) {
-      navigate('/login', { replace: true })
-    } else {
-      let perLength = user.permissions.length;
-
-      if(perLength === 0) {
-        user.initAuthList()
-      } else if(!user.permissions.includes(pathname)) {
-        navigate('/403')
-      }
-    }
-  }, [pathname])
+function App() {
 
   return (
-    user.token ? (
+    <AuthPage>
       <PageLayout>
         <Outlet />
       </PageLayout>
-    ) : (
-      user.isError ? (
-        <Navigate to="/login" replace />
-      ) : (
-        <Loading />
-      )
-    )
+    </AuthPage>
   )
-})
+}
 
 export default App;

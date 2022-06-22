@@ -34,7 +34,7 @@ class Index extends BaseController
 
     public function loginByToken()
     {
-        $permissions = ['/', '/task', '/task/list', '/task/my-list', '/system', '/system/dict/list', '/system/user/list', '/system/menu/list'];
+        $permissions = ['/', '/task', '/work/:id', '/task/list', '/task/my-list', '/system', '/system/dict/list', '/system/user/list', '/system/menu/list'];
         return json([
             'code'  =>  200,
             'msg'   =>  '成功',

@@ -7,6 +7,7 @@ import NotPermission from './pages/others/403'
 import menus from './router/index'
 import AllComponents from './pages'
 import Loading from './components/Loading'
+import AuthPage from '@/components/AuthPage';
 import page from './store/page'
 
 const TRoute = ({ Comp }) => {
@@ -19,7 +20,7 @@ const createRoute = (r) => {
   const route = (r) => {
     const Component = r.element && AllComponents[r.element];
 
-    if(!Component) return;
+    if (!Component) return;
 
     return (
       <Route
@@ -31,7 +32,7 @@ const createRoute = (r) => {
     );
   };
 
-  if(!r.element && r.children) {
+  if (!r.element && r.children) {
     return (
       <Route key={r.route || r.key} path={r.route || r.key}>
         {
@@ -39,7 +40,7 @@ const createRoute = (r) => {
         }
       </Route>
     )
-  } 
+  }
 
   return route(r);
 }
@@ -50,7 +51,7 @@ function Page() {
 
   let location = useLocation();
   useEffect(() => {
-    if(location.pathname !== page.activeSiderKey) {
+    if (location.pathname !== page.activeSiderKey) {
       page.changeActiveSiderKey(location.pathname)
     }
   }, [])
@@ -59,8 +60,22 @@ function Page() {
       <Route path="/login" element={<Login />} />
       <Route path="/404" element={<NotFound />} />
       <Route path="/403" element={<NotPermission />} />
+      {
+        menus.others.map(r => {
+          const Component = r.element && AllComponents[r.element];
+          if (!Component) return;
+          return (
+            <Route
+              key={r.route || r.key}
+              path={r.index ? null : (r.route || r.key)}
+              element={
+                <AuthPage><TRoute Comp={<Component />} /></AuthPage>}
+            />
+          );
+        })
+      }
       <Route path="/" element={<App />}>
-        { content }
+        {content}
       </Route>
     </Routes>
   )

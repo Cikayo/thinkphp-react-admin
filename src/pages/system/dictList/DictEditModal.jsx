@@ -36,7 +36,7 @@ function DictEditModal({ editRow, visible, handleCancel, handleOk }) {
                     name="dict_name"
                     rules={[{ required: true, message: '请输入字典名称!' }]}
                 >
-                    <Input />
+                    <Input placeholder="字典名称" />
                 </Form.Item>
             </Form>
         </Modal>

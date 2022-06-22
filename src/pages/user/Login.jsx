@@ -10,9 +10,11 @@ const Login = observer(() => {
   const navigate = useNavigate()
   function onFinish(values) {
     setBtnLoading(true)
-    user.login(values, () => {
+    user.login(values).then(res => {
       setBtnLoading(false)
       navigate('/')
+    }).catch(() => {
+      setBtnLoading(false)
     })
   }
   if(user.token) {

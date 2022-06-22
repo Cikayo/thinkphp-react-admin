@@ -16,21 +16,25 @@ class User {
         makeAutoObservable(this)
     }
 
-    async login(data, cb) {
-        await post(userLogin, data).then(res => {
-            let { token } = res.data;
-            runInAction(() => {
-                this.name = data.user_name;
-                this.token = token;
+    async login(data) {
+        return new Promise((resolve, reject) => {
+            post(userLogin, data).then(res => {
+                let { token } = res.data;
+                runInAction(() => {
+                    this.name = data.user_name;
+                    this.token = token;
+                })
+                setToken(data.user_name, USER_NAME_KEY)
+                setToken(token)
+                resolve(res)
+            }).catch(err => {
+                runInAction(() => {
+                    this.name = '';
+                    this.token = '';
+                })
+                removeToken()
+                reject(err)
             })
-            setToken(data.user_name, USER_NAME_KEY)
-            setToken(token)
-        }).catch(err => {
-            runInAction(() => {
-                this.name = '';
-                this.token = '';
-            })
-            removeToken()
         })
     }
 

@@ -15,6 +15,9 @@ const PageHeader = observer(({ page, user }) => {
           label: ( <a onClick={handleUserCenterClick}>{iconComponent('UserOutlined')} 用户中心</a>)
         },
         {
+          type: 'divider',
+        },
+        {
           key: 'logout',
           label: ( <a onClick={handleLogoutClick}>{iconComponent('LogoutOutlined')} 登出</a> )
         }

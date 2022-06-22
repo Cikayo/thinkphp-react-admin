@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Space } from 'antd'
+import { Button, Space, Popconfirm } from 'antd'
 import PageFunctions from '@/components/page/PageFunctions'
 import TTable from '@/components/TTable'
 import { iconComponent } from '@/utils/icons'
-import PermissionSetModal from './PermissionSetModal';
+import PermissionSetDrawer from './PermissionSetDrawer';
+import UserEditModal from './UserEditModal';
+import user from '@/store/user'
 
 function UserList() {
+  const [editRow, setEditRow] = useState(null);
   const [showSearch, setShowSearch] = useState(false)
-  const [perModalVisible, setPerModalVisible] = useState(false)
+  const [editVisible, setEditVisible] = useState(false)
+  const [perSetVisible, setPerSetVisible] = useState(false)
   
   const columns = [
     { title: '序号', key: 'number', render: (text, record, index) => (index + 1) },
@@ -22,8 +26,10 @@ function UserList() {
       key: 'action',
       render: (text, record) => (
         <Space>
-          <Button type='link'>编辑</Button>
-          <Button type='link'>删除</Button>
+          <Button type='link' onClick={() => handleEditClick(record)}>编辑</Button>
+          <Popconfirm title="确认删除吗?" onConfirm={handleDelConfirm}>
+            <Button type='link'>删除</Button>
+          </Popconfirm>
         </Space>
       )
     }
@@ -31,6 +37,7 @@ function UserList() {
   const data = [
     {
       key: '1',
+      status: 1,
       user_name: 'admin'
     }
   ]
@@ -38,19 +45,39 @@ function UserList() {
     setShowSearch(!showSearch)
   }
   function handlePerSetClick() {
-    setPerModalVisible(true)
+    setPerSetVisible(true)
   }
-  function handlePerModalOk() {
+  function handlePerSetOk() {
 
   }
-  function handlePerModalCancel() {
-    setPerModalVisible(false)
+  function handlePerSetCancel() {
+    setPerSetVisible(false)
+  }
+  // 新建点击
+  function handleCreateClick() {
+    setEditRow(null)
+    setEditVisible(true)
+  }
+  // 编辑点击
+  function handleEditClick(row) {
+    setEditRow(row)
+    setEditVisible(true)
+  }
+  function handleEditOk() {
+    setEditVisible(false)
+  }
+  function handleEditCancel() {
+    setEditVisible(false)
+  }
+  // 确认删除
+  function handleDelConfirm() {
+    console.log(1)
   }
   return (
     <div>
       <PageFunctions>
         <Space>
-          <Button type="primary" icon={iconComponent('PlusOutlined')}>新建</Button>
+          <Button type="primary" icon={iconComponent('PlusOutlined')} onClick={handleCreateClick}>新建</Button>
         </Space>
         <Space>
           <Button
@@ -62,10 +89,17 @@ function UserList() {
         </Space>
       </PageFunctions>
       <TTable dataList={data} columns={columns} />
-      <PermissionSetModal
-        visible={perModalVisible}
-        handleOk={handlePerModalOk}
-        handleCancel={handlePerModalCancel} />
+      <PermissionSetDrawer
+        user={user}
+        visible={perSetVisible}
+        handleOk={handlePerSetOk}
+        handleCancel={handlePerSetCancel} />
+      <UserEditModal
+        visible={editVisible}
+        editRow={editRow}
+        handleOk={handleEditOk}
+        handleCancel={handleEditCancel}
+      />
     </div>
   )
 }
